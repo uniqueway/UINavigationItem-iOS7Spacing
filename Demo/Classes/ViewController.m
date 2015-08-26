@@ -45,6 +45,11 @@
 {
     NSLog(@"Notification recieved: %@", notification.name);
     NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
+    
+    NSString *alias = notification.userInfo[SVProgressHUDStatusUserInfoAliasKey];
+    if (alias) {
+        NSLog(@"Status user info alias: %@", alias);
+    }
 }
 
 
@@ -88,6 +93,7 @@ static float progress = 0.0f;
 }
 
 - (void)dismissSuccess {
+    [SVProgressHUD sharedView].alias = @"Success-HUD";
 	[SVProgressHUD showSuccessWithStatus:@"Great Success!"];
 }
 

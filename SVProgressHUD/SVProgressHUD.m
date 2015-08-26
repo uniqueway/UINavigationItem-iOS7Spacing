@@ -21,6 +21,8 @@ NSString * const SVProgressHUDWillAppearNotification = @"SVProgressHUDWillAppear
 NSString * const SVProgressHUDDidAppearNotification = @"SVProgressHUDDidAppearNotification";
 
 NSString * const SVProgressHUDStatusUserInfoKey = @"SVProgressHUDStatusUserInfoKey";
+NSString * const SVProgressHUDStatusUserInfoAliasKey = @"SVProgressHUDStatusUserInfoAliasKey";
+
 
 static SVProgressHUDStyle SVProgressHUDDefaultStyle;
 static SVProgressHUDMaskType SVProgressHUDDefaultMaskType;
@@ -482,7 +484,17 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 
 
 - (NSDictionary *)notificationUserInfo{
-    return (self.stringLabel.text ? @{SVProgressHUDStatusUserInfoKey : self.stringLabel.text} : nil);
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    
+    if (self.stringLabel.text) {
+        userInfo[SVProgressHUDStatusUserInfoKey] = self.stringLabel.text;
+    }
+    
+    if (self.alias) {
+        userInfo[SVProgressHUDStatusUserInfoAliasKey] = self.alias;
+    }
+    
+    return userInfo.allKeys.count ? [NSDictionary dictionaryWithDictionary:userInfo] : nil;
 }
 
 

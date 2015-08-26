@@ -16,6 +16,7 @@ extern NSString * const SVProgressHUDWillAppearNotification;
 extern NSString * const SVProgressHUDDidAppearNotification;
 
 extern NSString * const SVProgressHUDStatusUserInfoKey;
+extern NSString * const SVProgressHUDStatusUserInfoAliasKey;
 
 typedef NS_ENUM(NSInteger, SVProgressHUDStyle) {
     SVProgressHUDStyleLight,        // default style, white HUD with black text, HUD background will be blurred on iOS 8 and above
@@ -30,6 +31,10 @@ typedef NS_ENUM(NSUInteger, SVProgressHUDMaskType) {
 };
 
 @interface SVProgressHUD : UIView
+
+@property (nonatomic, copy) NSString *alias;
+
++ (SVProgressHUD*)sharedView;
 
 #pragma mark - Customization
 
