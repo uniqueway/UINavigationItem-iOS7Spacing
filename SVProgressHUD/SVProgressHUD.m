@@ -165,22 +165,38 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
 #pragma mark - Show then dismiss methods
 
 + (void)showInfoWithStatus:(NSString *)string {
-    [self sharedView];
-    [self showImage:SVProgressHUDInfoImage status:string];
+    [self showInfoWithStatus:string duration:0.0f];
 }
 
 + (void)showSuccessWithStatus:(NSString *)string {
-    [self sharedView];
-    [self showImage:SVProgressHUDSuccessImage status:string];
+    [self showSuccessWithStatus:string duration:0.0f];
 }
 
 + (void)showErrorWithStatus:(NSString *)string {
+    [self showErrorWithStatus:string duration:0.0f];
+}
+
++ (void)showInfoWithStatus:(NSString *)string duration:(NSTimeInterval)duration {
     [self sharedView];
-    [self showImage:SVProgressHUDErrorImage status:string];
+    [self showImage:SVProgressHUDInfoImage status:string duration:duration];
+}
+
++ (void)showSuccessWithStatus:(NSString*)string duration:(NSTimeInterval)duration {
+    [self sharedView];
+    [self showImage:SVProgressHUDSuccessImage status:string duration:duration];
+}
+
++ (void)showErrorWithStatus:(NSString *)string duration:(NSTimeInterval)duration {
+    [self sharedView];
+    [self showImage:SVProgressHUDErrorImage status:string duration:duration];
 }
 
 + (void)showImage:(UIImage *)image status:(NSString *)string {
-    NSTimeInterval displayInterval = [[self sharedView] displayDurationForString:string];
+    [self showImage:image status:string duration:0.0f];
+}
+
++ (void)showImage:(UIImage *)image status:(NSString *)string duration:(NSTimeInterval)duration {
+    NSTimeInterval displayInterval = (duration > 0) ? duration : [[self sharedView] displayDurationForString:string];
     [[self sharedView] showImage:image status:string duration:displayInterval];
 }
 
